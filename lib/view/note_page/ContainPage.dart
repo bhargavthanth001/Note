@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/model/note_model.dart';
-import 'package:notes/model/user_model.dart';
-import 'package:notes/view/login_area/register_page.dart';
 
 import '../login_area/login_page.dart';
 

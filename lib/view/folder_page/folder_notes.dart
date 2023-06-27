@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:notes/view/login_area/login_page.dart';
-import 'package:notes/view/note_page/ContainPage.dart';
 import '../../model/folder_model.dart';
 
 class FolderNote extends StatefulWidget {
@@ -63,7 +62,7 @@ class _FolderNoteState extends State<FolderNote> {
                     style: TextStyle(color: Colors.red),
                   ),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 final notes = snapshot.data!;
                 return Column(children: [
                   for (var note in notes)
@@ -103,7 +102,25 @@ class _FolderNoteState extends State<FolderNote> {
                     )
                 ]);
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.edit_note_sharp,
+                      color: Colors.grey,
+                      size: 80,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "No Notes",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ));
               }
             },
           ),
@@ -116,25 +133,6 @@ class _FolderNoteState extends State<FolderNote> {
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  Route _createRoute(String? n_id) {
-    return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            Content(n_id: n_id),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 1.0);
-          const end = Offset.zero;
-          const curve = Curves.ease;
-
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        });
   }
 
   Future<void> showBottm(

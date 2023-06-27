@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/model/folder_model.dart';
 import 'package:notes/model/note_model.dart';
-import 'package:notes/model/user_model.dart';
 import 'package:notes/view/login_area/login_page.dart';
 
 import '../../model/label_model.dart';
@@ -99,10 +98,6 @@ class DisplayBottmSheet {
           .map((event) => event.docs
               .map((doc) => FolderModel.fromJson(doc.data()))
               .toList());
-    }
-
-    void moveNoteToFolder(DataNote dataNote) {
-      NoteDataHandler.deleteNote(dataNote);
     }
 
     Widget Folder(FolderModel folderModel) {

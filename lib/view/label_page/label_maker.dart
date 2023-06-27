@@ -2,9 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:notes/model/label_model.dart';
-import 'package:notes/view/navigation/NavBar.dart';
-
 import '../login_area/login_page.dart';
+import '../note_page/HomePage.dart';
 
 class LabelMaker extends StatefulWidget {
   const LabelMaker({Key? key}) : super(key: key);
@@ -67,9 +66,17 @@ class _LabelMakerState extends State<LabelMaker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: ShowSideNavigation(),
       appBar: AppBar(
         title: const Text("Label"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (builder) => HomePage()),
+                (Route<dynamic> route) => false);
+          },
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -81,14 +88,31 @@ class _LabelMakerState extends State<LabelMaker> {
                 return Center(
                   child: Text(snapshot.toString()),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 final result = snapshot.data!;
                 return ListView(
                   children: result.map((Label)).toList(),
                 );
               } else {
-                debugPrint("Data is >>> ${snapshot}");
-                return const Center(child: const CircularProgressIndicator());
+                return Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.label_off_outlined,
+                      color: Colors.grey,
+                      size: 80,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "No Label",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ));
               }
             },
           ),

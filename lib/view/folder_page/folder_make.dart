@@ -4,6 +4,8 @@ import 'package:notes/model/folder_model.dart';
 import 'package:notes/view/folder_page/folder_notes.dart';
 import 'package:notes/view/login_area/login_page.dart';
 
+import '../note_page/HomePage.dart';
+
 class CreateFloder extends StatefulWidget {
   const CreateFloder({Key? key}) : super(key: key);
 
@@ -81,6 +83,15 @@ class _CreateFloderState extends State<CreateFloder> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Folder"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (builder) => HomePage()),
+                (Route<dynamic> route) => false);
+          },
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -95,13 +106,31 @@ class _CreateFloderState extends State<CreateFloder> {
                     style: TextStyle(color: Colors.red),
                   ),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 final notes = snapshot.data!;
                 return ListView(
                   children: notes.map((Folders)).toList(),
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.folder_off_outlined,
+                      color: Colors.grey,
+                      size: 80,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "No Folder",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
+                ));
               }
             },
           ),

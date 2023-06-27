@@ -75,7 +75,7 @@ class FolderDataHandler {
         .collection('users')
         .doc(currentUser!.uid)
         .collection('folders')
-        .doc();
+        .doc(folderModel.id);
 
     final result = folderModel.toJson();
 
@@ -87,7 +87,7 @@ class FolderDataHandler {
         .collection('users')
         .doc(currentUser!.uid)
         .collection('folders')
-        .doc();
+        .doc(folderModel.id);
     await deleteFolder.delete();
   }
 }

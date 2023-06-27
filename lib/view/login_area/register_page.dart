@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:notes/model/user_model.dart';
+import 'package:notes/services/authenticate_services.dart';
 import 'package:notes/view/login_area/login_page.dart';
+
+import '../../controller/responsive_size.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -48,6 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = ResponsiveSize.screenHeight(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -124,7 +127,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (_email!.isEmpty) {
                             return "Enter the email";
                           } else {
-                            return null;
+                            if (_validateEmailRegEx(_email)) {
+                              return "Enter the valid email";
+                            } else {
+                              return null;
+                            }
                           }
                         },
                         decoration: InputDecoration(
@@ -197,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               Container(
                 child: MaterialButton(
-                  height: 60,
+                  height: screenHeight / 13.3,
                   minWidth: double.infinity,
                   onPressed: () {
                     bool? valid = _myFormKey.currentState!.validate();
@@ -205,18 +212,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       String _username = username.text;
                       String _email = email.text;
                       String _password = password.text;
-
-                      final userModel = UserModel(
-                          username: _username,
-                          email: _email,
-                          password: _password);
-                      FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: _email, password: _password)
-                          .then((value) => {
-                                debugPrint("user created"),
-                                UserData.addUser(userModel, currentUser!.uid)
-                              });
+                      AuthenticationServices.createUser(
+                          _username, _email, _password);
                       Fluttertoast.showToast(msg: "Register successfully");
                       Navigator.pop(context);
                     } else {

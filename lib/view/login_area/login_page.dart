@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/services/authenticate_services.dart';
 import 'package:notes/view/login_area/register_page.dart';
-import 'package:notes/view/note_page/HomePage.dart';
+
+import '../../controller/responsive_size.dart';
 
 User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -19,6 +21,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = ResponsiveSize.screenHeight(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -100,36 +104,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                       ),
                       MaterialButton(
-                        height: 60,
+                        height: screenHeight / 13.3,
                         minWidth: double.infinity,
                         onPressed: () async {
                           String _email = email.text;
                           String _password = password.text;
-                          User? user;
                           bool? valid = _myFormKey.currentState!.validate();
 
                           if (valid) {
-                            try {
-                              UserCredential userCredential = await FirebaseAuth
-                                  .instance
-                                  .signInWithEmailAndPassword(
-                                      email: _email, password: _password);
-                              print("user id is >>>> ${currentUser!.uid}");
-
-                              currentUser = userCredential.user;
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (builder) => HomePage()));
-                            } on FirebaseAuthException catch (e) {
-                              if (e.code == "user-not-found") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('user not found')));
-                              } else if (e.code == "wrong-password") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('wrong password')));
-                              }
-                            }
+                            AuthenticationServices.signIn(
+                                _email, _password, context);
                           } else {
                             _myFormKey.currentState!.validate();
                           }

@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:notes/model/user_model.dart';
-import 'package:notes/view/login_area/register_page.dart';
 import 'package:notes/view/navigation/NavBar.dart';
 import 'package:notes/view/note_page/ContainPage.dart';
 import 'package:notes/view/note_page/bottom_sheets.dart';
@@ -160,9 +157,6 @@ class _HomePageState extends State<HomePage> {
       drawer: ShowSideNavigation(),
       appBar: AppBar(
         title: Text("Notes"),
-        actions: [
-          // ChangeThemeButton()
-        ],
       ),
       body: SafeArea(
         child: Container(
@@ -176,18 +170,30 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(color: Colors.red),
                   ),
                 );
-              } else if (snapshot.hasData) {
+              } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                 final notes = snapshot.data!;
                 return ListView(
                   children: notes.map((ReadNotes)).toList(),
                 );
-              }
-              {
-                print("This is the data :- $snapshot");
+              } else {
                 return Center(
-                    child: Icon(
-                  Icons.folder_off_outlined,
-                  size: 80,
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.edit_note_sharp,
+                      color: Colors.grey,
+                      size: 80,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "No Notes",
+                      style: TextStyle(color: Colors.grey),
+                    )
+                  ],
                 ));
               }
             },

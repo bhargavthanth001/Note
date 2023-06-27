@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../model/notification_helper.dart';
+import '../../services/notification_helper.dart';
 
 var items = ['Only Once', 'Daily', 'Monthly', 'Yearly'];
 
