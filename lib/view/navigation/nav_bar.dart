@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/model/user_model.dart';
-import 'package:notes/view/note_page/HomePage.dart';
+import 'package:notes/view/note_page/home_page.dart';
 import 'package:notes/view/folder_page/folder_make.dart';
 import 'package:notes/view/label_page/label_maker.dart';
-import 'package:notes/view/note_portfolio/portfolio.dart';
+import 'package:notes/view/profile/profile_page.dart';
 
 import '../login_area/login_page.dart';
 
@@ -79,7 +79,7 @@ class _ShowSideNavigationState extends State<ShowSideNavigation> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (builder) => NotePortfolio(
+                            builder: (builder) => ProfilePage(
                                 userId: user.userId,
                                 username: user.username,
                                 email: user.email))),
@@ -123,7 +123,7 @@ class _ShowSideNavigationState extends State<ShowSideNavigation> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => NotePortfolio(
+                              builder: (builder) => ProfilePage(
                                     userId: user.userId!,
                                     username: user.username!,
                                     email: user.email!,

@@ -16,75 +16,82 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final double screenHeight = ResponsiveSize.screenHeight(context);
 
-    return Scaffold(
-        body: SafeArea(
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Column(
-              children: [
-                Text(
-                  "Welcome",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
+    return OrientationBuilder(builder: (context, oriantation) {
+      if (oriantation == Orientation.portrait)
+        return Scaffold(
+            body: SafeArea(
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Column(
+                  children: [
+                    Text(
+                      "Welcome",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "This is my note application with wide rage of features",
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 20,
+                Container(
+                  height: screenHeight / 3,
+                  child: Image.asset("assets/welcome.png"),
                 ),
-                Text(
-                  "This is my note application with wide rage of features",
-                  style: TextStyle(
-                    color: Colors.grey[700],
-                  ),
-                ),
+                Column(
+                  children: [
+                    MaterialButton(
+                      minWidth: double.infinity,
+                      height: screenHeight / 13.3,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => LoginScreen()));
+                      },
+                      child: Text("Login"),
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MaterialButton(
+                      minWidth: double.infinity,
+                      height: screenHeight / 13.3,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => RegisterPage()));
+                      },
+                      child: Text("Sign up"),
+                      color: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                  ],
+                )
               ],
             ),
-            Container(
-              height: screenHeight / 3,
-              child: Image.asset("assets/welcome.png"),
-            ),
-            Column(
-              children: [
-                MaterialButton(
-                  minWidth: double.infinity,
-                  height: screenHeight / 13.3,
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) => LoginScreen()));
-                  },
-                  child: Text("Login"),
-                  shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                MaterialButton(
-                  minWidth: double.infinity,
-                  height: screenHeight / 13.3,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => RegisterPage()));
-                  },
-                  child: Text("Sign up"),
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
+      else
+        return Container();
+    });
   }
 }

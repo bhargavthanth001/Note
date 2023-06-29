@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:notes/view/navigation/NavBar.dart';
-import 'package:notes/view/note_page/ContainPage.dart';
+import 'package:notes/view/navigation/nav_bar.dart';
+import 'package:notes/view/note_page/contain_page.dart';
 import 'package:notes/view/note_page/bottom_sheets.dart';
 import 'package:notes/view/note_page/reminder.dart';
 import '../../model/note_model.dart';

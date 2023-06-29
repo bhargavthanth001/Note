@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   RegExp password_validation =
       RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-  RegExp email_validation = RegExp("^[a-zA-Z0-9+_.-]+@gmail.com");
+  RegExp email_validation = RegExp("^[a-z0-9+_.-]+@gmail.com");
 
   bool _validatePassword(String password) {
     String _password = password.trim();
@@ -39,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _validateEmailRegEx(String email) {
     String _email = email.trim();
-
     if (email_validation.hasMatch(_email)) {
       return true;
     } else {
@@ -108,7 +107,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: (_username) {
                           if (_username!.isEmpty) {
                             return "Enter the username";
-                          } else {}
+                          } else {
+                            return null;
+                          }
                         },
                         decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(),
@@ -128,9 +129,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             return "Enter the email";
                           } else {
                             if (_validateEmailRegEx(_email)) {
-                              return "Enter the valid email";
-                            } else {
                               return null;
+                            } else {
+                              return "Enter the valid email";
                             }
                           }
                         },

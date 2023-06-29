@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:notes/model/label_model.dart';
 import '../login_area/login_page.dart';
-import '../note_page/HomePage.dart';
+import '../note_page/home_page.dart';
 
 class LabelMaker extends StatefulWidget {
   const LabelMaker({Key? key}) : super(key: key);
@@ -235,6 +235,7 @@ class _LabelMakerState extends State<LabelMaker> {
         });
   }
 
+  //method to convert the color string to color
   Color hecToColor(String hexColor) {
     final hexCode = hexColor.replaceAll('#', '');
     return Color(int.parse('FF$hexCode', radix: 16));

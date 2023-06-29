@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../model/user_model.dart';
 import '../view/login_area/login_page.dart';
-import '../view/note_page/HomePage.dart';
+import '../view/note_page/home_page.dart';
 
 class AuthenticationServices {
   static void createUser(String _username, String _email, String _password) {
@@ -28,7 +28,8 @@ class AuthenticationServices {
       Navigator.push(
           context, MaterialPageRoute(builder: (builder) => HomePage()));
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
+      debugPrint(e.code);
+      if (e.code == "invalid-email") {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('user not found')));
       } else if (e.code == "wrong-password") {

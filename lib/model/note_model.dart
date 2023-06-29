@@ -7,14 +7,15 @@ class DataNote {
   String? description;
   String? labelName;
   String? color;
+  bool? isReminder;
 
-  DataNote({
-    this.id,
-    this.title,
-    this.description,
-    this.labelName,
-    this.color,
-  });
+  DataNote(
+      {this.id,
+      this.title,
+      this.description,
+      this.labelName,
+      this.color,
+      this.isReminder});
 
   factory DataNote.fromJson(Map<String, dynamic> json) => DataNote(
         id: json["id"],
@@ -22,6 +23,7 @@ class DataNote {
         description: json["description"],
         labelName: json["labelName"],
         color: json["color"],
+        isReminder: json["isReminder"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +32,7 @@ class DataNote {
         "description": description,
         "labelName": labelName,
         "color": color,
+        "isReminder": isReminder
       };
 }
 

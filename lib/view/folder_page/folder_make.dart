@@ -4,7 +4,7 @@ import 'package:notes/model/folder_model.dart';
 import 'package:notes/view/folder_page/folder_notes.dart';
 import 'package:notes/view/login_area/login_page.dart';
 
-import '../note_page/HomePage.dart';
+import '../note_page/home_page.dart';
 
 class CreateFloder extends StatefulWidget {
   const CreateFloder({Key? key}) : super(key: key);

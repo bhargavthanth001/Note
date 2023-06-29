@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/view/note_page/HomePage.dart';
-import 'package:notes/view/login_area/HomeUi.dart';
+import 'package:flutter/services.dart';
+import 'package:notes/view/note_page/home_page.dart';
+import 'package:notes/view/login_area/home_ui.dart';
 
 void main() async {
   debugPrint("Statrting...");
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +24,6 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            debugPrint("Data is :- ${snapshot}");
             return HomePage();
           } else {
             return Home();

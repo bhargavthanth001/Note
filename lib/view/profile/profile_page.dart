@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/controller/responsive_size.dart';
 import 'package:notes/services/authenticate_services.dart';
-import 'package:notes/view/login_area/HomeUi.dart';
+import 'package:notes/view/login_area/home_ui.dart';
 import 'package:notes/view/login_area/login_page.dart';
 
-import '../note_page/HomePage.dart';
+import '../note_page/home_page.dart';
 
-class NotePortfolio extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   final String? userId;
   final String? username;
   final String? email;
-  const NotePortfolio(
+  const ProfilePage(
       {Key? key,
       required this.userId,
       required this.username,
@@ -19,10 +19,10 @@ class NotePortfolio extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<NotePortfolio> createState() => _NotePortfolioState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _NotePortfolioState extends State<NotePortfolio> {
+class _ProfilePageState extends State<ProfilePage> {
   int _countNotes = 0;
   int _countFolders = 0;
   int _countLabels = 0;
