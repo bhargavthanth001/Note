@@ -46,35 +46,44 @@ class _ShowSideNavigationState extends State<ShowSideNavigation> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   UserModel user = snapshot.data!;
-                  return UserAccountsDrawerHeader(
-                      accountName: Text(
-                        // "${widget.username}",
-                        user.username!,
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      accountEmail:
-                          // Text("${widget.email}"),
-                          Text(user.email!),
-                      currentAccountPicture: FittedBox(
-                          fit: BoxFit.contain,
-                          alignment: Alignment.center,
-                          child: Container(
-                            height: 25,
-                            width: 25,
+                  return GestureDetector(
+                    child: UserAccountsDrawerHeader(
+                        accountName: Text(
+                          // "${widget.username}",
+                          user.username!,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        accountEmail:
+                            // Text("${widget.email}"),
+                            Text(user.email!),
+                        currentAccountPicture: FittedBox(
+                            fit: BoxFit.contain,
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.grey,
-                                border: Border.all(
-                                    color: Colors.white, width: 0.5)),
-                            // padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              user.username!.substring(0, 1).toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.white,
+                            child: Container(
+                              height: 25,
+                              width: 25,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey,
+                                  border: Border.all(
+                                      color: Colors.white, width: 0.5)),
+                              // padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                user.username!.substring(0, 1).toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          )));
+                            ))),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (builder) => NotePortfolio(
+                                userId: user.userId,
+                                username: user.username,
+                                email: user.email))),
+                  );
                 } else {
                   debugPrint("Data >> $snapshot");
                   return UserAccountsDrawerHeader(
@@ -84,17 +93,17 @@ class _ShowSideNavigationState extends State<ShowSideNavigation> {
                 }
               }),
           ListTile(
-            leading: const Icon(Icons.folder),
-            title: const Text("Folder"),
-            onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CreateFloder())),
-          ),
+              leading: const Icon(Icons.folder),
+              title: const Text("Folder"),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (builder) => CreateFloder()))),
           ListTile(
-            leading: const Icon(Icons.sticky_note_2_outlined),
-            title: const Text("Notes"),
-            onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage())),
-          ),
+              leading: const Icon(Icons.sticky_note_2_outlined),
+              title: const Text("Notes"),
+              onTap: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (builder) => HomePage()),
+                  (route) => false)),
           ListTile(
               leading: const Icon(Icons.label_outlined),
               title: const Text("Labels"),

@@ -6,6 +6,7 @@ import 'package:notes/view/note_page/ContainPage.dart';
 import 'package:notes/view/note_page/bottom_sheets.dart';
 import 'package:notes/view/note_page/reminder.dart';
 import '../../model/note_model.dart';
+import '../../services/notification_helper.dart';
 import '../login_area/login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -136,7 +137,9 @@ class _HomePageState extends State<HomePage> {
                           const Icon(Icons.notifications_active),
                           Container(
                               margin: const EdgeInsets.only(left: 10),
-                              child: const Text("Set Reminder")),
+                              child: dataNote.isReminder == true
+                                  ? Text("Remove Reminder")
+                                  : Text("Set Reminder")),
                         ],
                       ),
                     ],
@@ -229,7 +232,10 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () => Navigator.pop(context),
                   child: const Text('cancel')),
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    if (dataNote.isReminder == true) {
+                      await flutterLocalNotificationsPlugin.cancel(notiId);
+                    }
                     Navigator.pop(context, 'Ok');
                     return NoteDataHandler.deleteNote(dataNote);
                   },
@@ -270,6 +276,23 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: const Text('Ok'))
             ],
+          );
+        });
+  }
+
+  void _setReminder(
+      int _id, String _noteId, String _title, String _description) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Set Reminder"),
+            content: SetReminder(
+              id: _id,
+              noteId: _noteId,
+              title: _title,
+              description: _description,
+            ),
           );
         });
   }
@@ -319,12 +342,10 @@ class _HomePageState extends State<HomePage> {
         deleteLabel(dataNote);
         break;
       case 5:
-        SetReminder.setReminders(
-          notiId++,
-          dataNote.title!,
-          dataNote.description!,
-          context,
-        );
+        dataNote.isReminder == true
+            ? CencelReminder.cencelReminder(notiId, dataNote.id, context)
+            : _setReminder(
+                notiId, dataNote.id!, dataNote.title!, dataNote.description!);
         break;
     }
   }

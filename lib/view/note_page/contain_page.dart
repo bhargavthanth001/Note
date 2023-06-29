@@ -175,8 +175,10 @@ class _ContentState extends State<Content> {
                   final uid = currentUser!.uid;
 
                   if (noteId == null) {
-                    final dataNotes =
-                        DataNote(title: _title, description: _description);
+                    final dataNotes = DataNote(
+                        title: _title,
+                        description: _description,
+                        isReminder: false);
                     NoteDataHandler.addNotes(dataNotes, uid);
                   } else {
                     final dataNotes = DataNote(
